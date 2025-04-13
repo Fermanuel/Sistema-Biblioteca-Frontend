@@ -11,8 +11,11 @@ const handler = NextAuth({
       },
       async authorize(credentials) {
 
+        console.log({credentials});
+
         const res = await fetch(
-          `${process.env.BACKEND_URL}/auth/login`,
+
+          `${process.env.NEXTAUTH_URL}/auth/login`,
           {
             method: "POST",
             body: JSON.stringify({
@@ -22,7 +25,11 @@ const handler = NextAuth({
             headers: { "Content-Type": "application/json" },
           }
         );
+
+        
         const user = await res.json();
+
+        console.log(user);
 
         if (user.error) throw user;
 
