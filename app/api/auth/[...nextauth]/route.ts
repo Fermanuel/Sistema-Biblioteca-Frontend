@@ -28,6 +28,8 @@ const handler = NextAuth({
 
         if (user.error) throw user;
 
+        
+
         return user;
       },
     }),
