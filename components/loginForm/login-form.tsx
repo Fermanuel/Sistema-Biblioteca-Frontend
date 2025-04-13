@@ -13,7 +13,6 @@ import {
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -47,7 +46,7 @@ export function LoginForm({
         await signIn("credentials", {
             email: values.email,
             password: values.password,
-            redirect: false,
+            redirect: false
         });
     }
 
