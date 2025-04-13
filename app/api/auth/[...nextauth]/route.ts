@@ -10,8 +10,9 @@ const handler = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
+
         const res = await fetch(
-          `${process.env.NEXTAUTH_URL}/auth/login`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`,
           {
             method: "POST",
             body: JSON.stringify({
@@ -22,6 +23,7 @@ const handler = NextAuth({
           }
         );
         const user = await res.json();
+
         console.log(user);
 
         if (user.error) throw user;

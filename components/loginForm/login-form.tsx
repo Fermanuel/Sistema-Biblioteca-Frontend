@@ -41,6 +41,7 @@ export function LoginForm({
     })
 
     async function onSubmit(values: z.infer<typeof loginSchema>) {
+        
         console.log(values)
 
         await signIn("credentials", {
@@ -90,7 +91,11 @@ export function LoginForm({
                                 )}
                             />
 
-                            <ButtonAuth />
+                            {/* <ButtonAuth /> */}
+
+                            <Button type="submit" className="w-full">
+                                Iniciar sesión
+                            </Button>
 
                             <Button variant="outline" className="w-full">
                                 Login with Google
