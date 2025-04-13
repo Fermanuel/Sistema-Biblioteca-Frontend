@@ -56,7 +56,7 @@ export function LoginForm({
             }
 
             toast.success("Inicio de sesión exitoso");
-            router.push("/inicio");
+            router.push("/inicio/bienvenida"); // Redirige a la página de bienvenida
         } catch (err: any) {
             toast.error(err.message || "Error al iniciar sesión");
         }
