@@ -6,8 +6,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <SidebarProvider>
             <AppSidebar />
             <SidebarTrigger />
-            <main className="ml-20 p-4">
-            {children}
+            <main>
+                {children}
             </main>
         </SidebarProvider>
     );
