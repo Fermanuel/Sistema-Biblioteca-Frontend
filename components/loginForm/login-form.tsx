@@ -25,7 +25,7 @@ import { loginSchema } from "@/lib/schema/loginSchema"
 import { Input } from "@/components/ui/input"
 import { z } from "zod"
 import { signIn } from "next-auth/react";
-import { useRouter } from 'next/router';
+import { toast } from "sonner";
 
 export function LoginForm({
     className,
@@ -41,20 +41,36 @@ export function LoginForm({
     })
 
     async function onSubmit(values: z.infer<typeof loginSchema>) {
-
-        const res = await signIn("credentials", {
+        const loginPromise = async () => {
+          const res = await signIn("credentials", {
             email: values.email,
             password: values.password,
-            redirect: false
+            redirect: false,
+          });
+      
+          if (res?.error) {
+            throw new Error(res.error);
+          }
+      
+          return res;
+        };
+      
+        toast.promise(loginPromise(), {
+          loading: "Iniciando sesión...",
+          success: "Inicio de sesión exitoso",
+          error: (err) => err.message || "Error al iniciar sesión",
         });
+      
+        try {
+          await loginPromise();
 
-        if (res?.error) {
-            console.log(res.error)
-            return;
+            // Aquí puedes redirigir al usuario a otra página después de iniciar sesión
+
+            
+        } catch (err) {
+          // El error ya ha sido manejado por toast.promise
         }
-
- 
-    }
+      }
 
     return (
         <div className={cn("flex flex-col gap-6", className)} {...props}>

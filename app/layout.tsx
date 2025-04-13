@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SessionAuthProvider from "@/context/SessionAuthProvider";
+import { Toaster } from 'sonner'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,6 +31,7 @@ export default function RootLayout({
       >
         <SessionAuthProvider>
           {children}
+          <Toaster position="top-right" richColors/>
         </SessionAuthProvider>
       </body>
     </html>
