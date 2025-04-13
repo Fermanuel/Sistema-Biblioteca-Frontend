@@ -15,7 +15,7 @@ const handler = NextAuth({
 
         const res = await fetch(
 
-          `${process.env.NEXTAUTH_URL}/auth/login`,
+          `${process.env.NEXTAUTH_URL}api/auth/login`,
           {
             method: "POST",
             body: JSON.stringify({
