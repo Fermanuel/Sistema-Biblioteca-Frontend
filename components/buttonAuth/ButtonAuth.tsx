@@ -1,9 +1,12 @@
 "use client";
 
 import { signIn, signOut, useSession } from "next-auth/react";
+import { Button } from "@/components/ui/button";
 
 export default function ButtonAuth() {
   const { data: session, status } = useSession();
+
+  console.log({session, status});
 
   if (status === "loading") {
     return <p>Loading...</p>;
@@ -11,26 +14,20 @@ export default function ButtonAuth() {
 
   if (session) {
     return (
-      <>
-        Signed in as {session.user?.email} <br />
-        <button
-          onClick={() => signOut()}
-          className="btn btn-danger"
-        >
+      <div className="flex flex-col items-center gap-2">
+        <p>Signed in as {session.user?.email}</p>
+        <Button onClick={() => signOut()} variant="destructive">
           Sign out
-        </button>
-      </>
+        </Button>
+      </div>
     );
   }
+
   return (
-    <>
-      Not signed in <br />
-      <button
-        onClick={() => signIn()}
-        className="btn btn-primary"
-      >
+    <div className="flex flex-col items-center gap-2">
+      <Button onClick={() => signIn()} variant="default" className="w-full">
         Sign in
-      </button>
-    </>
+      </Button>
+    </div>
   );
 }
