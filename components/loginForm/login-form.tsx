@@ -26,11 +26,14 @@ import { Input } from "@/components/ui/input"
 import { z } from "zod"
 import { signIn } from "next-auth/react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export function LoginForm({
     className,
     ...props
 }: React.ComponentPropsWithoutRef<"div">) {
+
+    const router = useRouter();
 
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
@@ -41,36 +44,23 @@ export function LoginForm({
     })
 
     async function onSubmit(values: z.infer<typeof loginSchema>) {
-        const loginPromise = async () => {
-          const res = await signIn("credentials", {
-            email: values.email,
-            password: values.password,
-            redirect: false,
-          });
-      
-          if (res?.error) {
-            throw new Error(res.error);
-          }
-      
-          return res;
-        };
-      
-        toast.promise(loginPromise(), {
-          loading: "Iniciando sesión...",
-          success: "Inicio de sesión exitoso",
-          error: (err) => err.message || "Error al iniciar sesión",
-        });
-      
         try {
-          await loginPromise();
+            const res = await signIn("credentials", {
+                email: values.email,
+                password: values.password,
+                redirect: false, // Evita la redirección automática
+            });
 
-            // Aquí puedes redirigir al usuario a otra página después de iniciar sesión
+            if (res?.error) {
+                throw new Error(res.error);
+            }
 
-            
-        } catch (err) {
-          // El error ya ha sido manejado por toast.promise
+            toast.success("Inicio de sesión exitoso");
+            router.push("/dashboard/summary");
+        } catch (err: any) {
+            toast.error(err.message || "Error al iniciar sesión");
         }
-      }
+    }
 
     return (
         <div className={cn("flex flex-col gap-6", className)} {...props}>
