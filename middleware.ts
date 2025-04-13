@@ -5,5 +5,7 @@ export const config = {
     "/catalogo/:path*", 
     "/inicio/:path*", 
     "/prestamos/:path*",
+    "/reportes/:path*",
+    "/usuarios/:path*",
   ],
 };
