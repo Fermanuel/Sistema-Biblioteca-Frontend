@@ -24,14 +24,14 @@ import { useForm } from "react-hook-form"
 import { loginSchema } from "@/lib/schema/loginSchema"
 import { Input } from "@/components/ui/input"
 import { z } from "zod"
-import ButtonAuth from "../buttonAuth/ButtonAuth";
 import { signIn } from "next-auth/react";
+import { useRouter } from 'next/router';
 
 export function LoginForm({
     className,
     ...props
 }: React.ComponentPropsWithoutRef<"div">) {
-    // Configuración del formulario utilizando useForm
+
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
@@ -41,14 +41,19 @@ export function LoginForm({
     })
 
     async function onSubmit(values: z.infer<typeof loginSchema>) {
-        
-        console.log(values)
 
-        await signIn("credentials", {
+        const res = await signIn("credentials", {
             email: values.email,
             password: values.password,
             redirect: false
         });
+
+        if (res?.error) {
+            console.log(res.error)
+            return;
+        }
+
+ 
     }
 
     return (
@@ -91,10 +96,8 @@ export function LoginForm({
                                 )}
                             />
 
-                            {/* <ButtonAuth /> */}
-
                             <Button type="submit" className="w-full">
-                                Iniciar sesión
+                                Log In
                             </Button>
 
                             <Button variant="outline" className="w-full">

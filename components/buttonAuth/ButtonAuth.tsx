@@ -22,12 +22,4 @@ export default function ButtonAuth() {
       </div>
     );
   }
-
-  return (
-    <div className="flex flex-col items-center gap-2">
-      <Button onClick={() => signIn()} variant="default" className="w-full">
-        Sign in
-      </Button>
-    </div>
-  );
 }
